@@ -1,25 +1,81 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect}  from 'react'
+import './App.css'
+import Card from './components/card'
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import NavbarComp from './components/navbarComp'
 
-function App() {
+//import Pages from './components/pagination'
+
+export default function App() {
+  
+  const [currentPage,setcurrentPage] = useState(0);
+
+  const nextPage = () => {
+    setcurrentPage(i => i + 12)
+  }
+
+  const prevPage = () => {
+    if (currentPage >0)
+    setcurrentPage(i => i - 12)
+  }
+
+  const [infos,setInfos] = useState()
+
+  const fetchApi = async () => {
+    let marvelUrl = `https://gateway.marvel.com/v1/public/characters?limit=12&offset=${currentPage}&ts=jkluio&apikey=d2b78cb0e828720eff23e5194b99c04b&hash=1b81c1d1bb5d8c7cb9608d0b32aaa270`;
+    const response = await fetch(marvelUrl)
+    //console.log(response.status)
+    const responseJson = await response.json()
+    setInfos(responseJson)
+    //console.log(currentPage)
+  }
+
+  useEffect(() => {
+    fetchApi()
+  }, [currentPage])
+  //el [] vacío hace lo del useEffect una sola vez, si lo 
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+/*
+  const[currentPage, setCurrentPage] = useState(0)
+
+  const filteredCharacters = () : infos.data.results => {
+    return infos.data.results.slice( currentPage , currentPage + 12 );
+  }
+
+  const nextPage = () => {
+    setCurrentPage( currentPage + 12);
+  }
+
+  const prevPage = () => {
+    if (currentPage >0)
+    setCurrentPage( currentPage - 12);
+  }
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+*/
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <NavbarComp/>
+  
+      <div className="container d-flex justify-content-center align-items-center">
+        <div className="row">
+          {!infos ? <div className="lds-dual-ring"></div> :
+          //recorro el json con map en el punto de results para extraer los nombres
+          infos.data.results.map( hero =>(
+            //<li>{hero.name}</li>
+              <div className="col-md-4 mt-4" key={hero.id}>  
+                <Card characters={hero}/>
+              </div>
+           ))
+        }
+       </div>
 
-export default App;
+      </div>
+
+      <div className="container d-flex justify-content-center align-items-center mt-4">
+        <button className="btn btn-secondary" onClick={prevPage}> Before </button>
+        <button className="btn btn-secondary" onClick={nextPage}> Next </button>
+      </div>
+
+    </div>
+  )
+}
