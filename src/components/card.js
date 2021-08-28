@@ -5,7 +5,7 @@ function card({characters}) {
     return (
         
         <div className="card bg-dark">
-            <img src={characters.thumbnail.path+"."+characters.thumbnail.extension} className="img-responsive"></img>
+            <img src={characters.thumbnail.path+"."+characters.thumbnail.extension} alt="" className="img-responsive"></img>
             <div className="text-block center">
                 <h4 className="card-title">{characters.name}</h4>
             </div>

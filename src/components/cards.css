@@ -12,8 +12,8 @@
     border: none !important;
     display: flex;
     min-width: 400px;
-    max-height: 350px;
-    min-height: 350px;
+    max-height: 330px;
+    min-height: 330px;
     overflow: hidden;
 }
 .card:hover{
@@ -56,19 +56,37 @@
         font-size: 1.1em;
     }
     .card{
-      max-width: 215px;
-      min-width: 215px;
-      max-height: 175px;
-      min-height: 175px;
+      min-width: 300px;
+      max-width: 300px;
+      min-height: 255px;
+      max-height: 255px;
+      margin: auto;
     }
   }
-  @media only screen and (max-width: 815px) {
+  @media only screen and (max-width: 991px) {
     /* For mobile phones: */
     .card-title{
         font-size: 1.1em;
     }
     .card{
-        margin-left: 25%;
+      min-width: 300px;
+      max-width: 300px;
+      min-height: 205px;
+      max-height: 205px;
+      margin: auto;
+    }
+  }
+  @media only screen and (max-width: 769px) {
+    /* For mobile phones: */
+    .card-title{
+        font-size: 1.1em;
+    }
+    .card{
+      margin: auto;
+      max-width: 400px;
+      min-width: 400px;
+      max-height: 340px;
+      min-height: 340px;
     }
   }
 
